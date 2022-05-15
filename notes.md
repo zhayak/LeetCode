@@ -84,10 +84,12 @@ https://labuladong.github.io/algo/2/17/18/
 ## [83.删除排序链表中的重复元素.py](83.删除排序链表中的重复元素.py)
 与上一题思路一致，但注意结束后断开与后续重复节点的连接。slow.next = None
 
-## [27.移除元素.py](27.移除元素.py) [283.移动零.py](283.移动零.py)
+## [27.移除元素.py](27.移除元素.py)
+## [283.移动零.py](283.移动零.py)
 与26题思路一致
 
-## [167.两数之和-ii-输入有序数组.py](167.两数之和-ii-输入有序数组.py) [344.反转字符串.py](344.反转字符串.py)
+## [167.两数之和-ii-输入有序数组.py](167.两数之和-ii-输入有序数组.py)
+## [344.反转字符串.py](344.反转字符串.py)
 左右两指针，从两侧到中间靠拢
 
 ## [5.最长回文子串.py](5.最长回文子串.py)
@@ -95,6 +97,53 @@ https://labuladong.github.io/algo/2/17/18/
 
 ## [303.区域和检索-数组不可变.py](303.区域和检索-数组不可变.py)
 使用前缀和的方法，不用反复进行累加计算，只需在初始化时计算一次即可
+
+## [304.二维区域和检索-矩阵不可变.py](304.二维区域和检索-矩阵不可变.py)
+使用二维数组前缀和，注意计算公式
+
+## [1109.航班预订统计.py](1109.航班预订统计.py) 
+## [1094.拼车.py](1094.拼车.py)
+使用差分数组的方法，构造diff数组，对diff数组进行操作，最后recover最终数组。<br>
+**差分数组的主要适用场景是频繁对原始数组的某个区间的元素进行增减**
+
+## [48.旋转图像.py](48.旋转图像.py)
+矩阵顺时针旋转90度，相当于先按对角线镜面翻转，再把每一行的元素翻转
+
+## [54.螺旋矩阵.py](54.螺旋矩阵.py)
+## [59.螺旋矩阵-ii.py](59.螺旋矩阵-ii.py)
+采用上下左右四个边界来控制for循环
+```
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        m, n = len(matrix), len(matrix[0])
+        upper, lower, left, right = 0, m-1, 0, n-1
+        res = []
+        while len(res) < m * n:
+            if upper <= lower:
+                for j in range(left, right+1):
+                    res.append(matrix[upper][j])
+                upper += 1
+            if left <= right:
+                for i in range(upper, lower+1):
+                    res.append(matrix[i][right])
+                right -= 1
+            if upper <= lower:
+                for j in range(right, left-1, -1):
+                    res.append(matrix[lower][j])
+                lower -= 1
+            if left <= right:
+                for i in range(lower, upper-1, -1):
+                    res.append(matrix[i][left])
+                left += 1
+        return res
+```
+
+## [76.最小覆盖子串.py](76.最小覆盖子串.py)
+滑动窗口算法
+
+## [567.字符串的排列.py](567.字符串的排列.py)
+## [438.找到字符串中所有字母异位词.py](438.找到字符串中所有字母异位词.py)
+滑动窗口算法，注意左指针收缩的条件为字符串长度不超过s1的长度
 
 <br><br>
 
@@ -109,4 +158,5 @@ https://labuladong.github.io/algo/2/17/18/
 
 # Review List
 - [25.k-个一组翻转链表.py](25.k-个一组翻转链表.py)
-- 
+- [76.最小覆盖子串.py](76.最小覆盖子串.py)
+- [567.字符串的排列.py](567.字符串的排列.py)
