@@ -183,9 +183,51 @@ class Solution:
 
 <br><br>
 
+# 单调栈
+## 模板：下一个更大元素
+https://labuladong.github.io/algo/2/21/60/ <br>
+倒序遍历：stack中存储数值
+```
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        res = [-1 for _ in range(len(nums))]
+        stack = []
+        for i in range(len(nums)-1, -1, -1):
+            while stack and stack[-1] <= nums[i]:
+                stack.pop()
+            res[i] = stack[-1] if stack else -1
+            stack.append(nums[i])
+        return res
+```
+正序遍历：stack中存储下标
+```
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        res = [-1 for _ in range(len(nums))]
+        stack = []
+        for i in range(n):
+            while stack and nums[stack[-1]] < nums[i]:
+                res[stack[-1]] = nums[i]
+                stack.pop()
+            stack.append(i)
+        return results
+```
+
+## [739.每日温度.py](739.每日温度.py)
+套用单调栈模板，只不过在stack中存储index
+
+## [503.下一个更大元素-ii.py](503.下一个更大元素-ii.py)
+循环数组技巧：直接将数组*2即可
+
+<br><br>
+
 # 数据结构设计
 ## [380.o-1-时间插入、删除和获取随机元素.py](380.o-1-时间插入、删除和获取随机元素.py)
 使用一个 `val_to_index` 的dictionary加上数组来记录数据。删除时，将想要删除的元素与数组末尾的元素进行交换，然后再删除末尾的元素。
+
+## [710.黑名单中的随机数.py](710.黑名单中的随机数.py)
+https://labuladong.github.io/algo/2/18/30/
+构建一个mapping，将黑名单的数map到不是黑名单的数字上。将所有黑名单的数移到数组末尾，这样只需在数组前半部分随机取数即可。随机取到一个数后，查看其是否在mapping中，如果在，意味着它是黑名单中的数，返回它map到的白名单的数即可。
 
 <br><br>
 
@@ -197,6 +239,8 @@ class Solution:
 寻找回文串是从中间向两端扩展，判断回文串是从两端向中间收缩。对于单链表，无法直接倒序遍历，可以造一条新的反转链表，可以利用链表的后序遍历，也可以用栈结构倒序处理单链表
 ### **二分搜索问题的泛化**
 当我们可以通过一个个试出来答案，且试答案的函数为单调函数的时候，可以考虑用泛化二分搜索（参考875）
+### **数据结构设计**
+如果想高效地，等概率地随机获取元素，就要使用数组作为底层容器，同时配合dictionary来构建index的索引。为了维护数组的连续性，通常使用交换元素的方式，将想要删除的元素交换到数组末尾再pop掉。
 
 <br><br>
 
@@ -204,3 +248,5 @@ class Solution:
 - [25.k-个一组翻转链表.py](25.k-个一组翻转链表.py)
 - [76.最小覆盖子串.py](76.最小覆盖子串.py)
 - [567.字符串的排列.py](567.字符串的排列.py)
+- [710.黑名单中的随机数.py](710.黑名单中的随机数.py)
+- [739.每日温度.py](739.每日温度.py)
