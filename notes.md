@@ -418,6 +418,100 @@ dp[i][j]表示str1[:i]和str2[:j]的最小删除和
 ## [516.最长回文子序列.py](516.最长回文子序列.py)
 转化为求s和其倒序字符串的最长公共子序列，最少插入次数即为字符串长度减去最长公共子序列的长度，最长回文子序列即为最长公共子序列的长度
 
+## [416.分割等和子集.py](416.分割等和子集.py)
+问题可转化为0-1型背包问题，即是否可以找到几个物品放入容量为sum/2的背包使背包正好装满。
+
+## [518.零钱兑换-ii.py](518.零钱兑换-ii.py)
+dp[i][j]表示使用前i个硬币凑出总额j的组合数量
+```
+if coins[i-1] > j:
+    dp[i][j] = dp[i-1][j]
+else:
+    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]
+```
+
+## [494.目标和.py](494.目标和.py)
+可转化为分割子集问题。集合A为加号的数，集合B为减号的数，则sum(A) - sum(B) = target => sum(A) = (target + sum(nums)) / 2<br>
+即从nums中选出和为(target+sum(nums))/2的子集<br>
+dp[i][j]表示使用前i个数使其和为j<br>
+注意这里的base case为dp[0][0] = 1。dp[i][0]不一定为1，比如nums = [0, 0, 0]时，dp[1][0] = 2, dp[2][0] = 4
+
+<br><br>
+
+# 回溯算法
+回溯算法和 DFS 算法的细微差别是：回溯算法是在遍历「树枝」，DFS 算法是在遍历「节点」
+```
+def backtrack(路径, 选择列表):
+    if 满足结束条件:
+        result.add(路径)
+        return
+    
+    for 选择 in 选择列表:
+        做选择
+        backtrack(路径, 选择列表)
+        撤销选择
+```
+## [46.全排列.py](46.全排列.py)
+直接套用回溯模板即可
+
+## [47.全排列-ii.py](47.全排列-ii.py)
+由于有重复，那么只需把index加入到visited中即可记录该元素有没有被访问过，最后加入到答案list中时判断一下该组合是否已经存在了即可。
+<br>优化方法：剪枝。先将nums排序，剪枝条件为
+```
+if i > 0 and nums[i] == nums[i - 1] and (i - 1) not in visited:
+    continue
+```
+如果这个元素是重复的，且之前和它相同的元素还没有被使用过，那么我们就先暂时不管它，等待它之前的元素先加入排序。如果之前的元素已经被使用过也就是说已经在排序中了，那么我们就继续正常使用这个元素。这样的话可以确保重复元素的相对位置是固定的，减少了重读的排序。
+
+## [51.n-皇后.py](51.n-皇后.py)
+路径：board 中小于 row 的那些行都已经成功放置了皇后
+选择列表：第row行的所有列都是放置皇后的选择
+结束条件：row超过board的最后一行，即 row == len(board)
+判断某个位置是否可以放置皇后时，只需判断它的上方，左上和右上是否有皇后，不需要判断下方因为下方还没有放置皇后
+
+## [698.划分为k个相等的子集.py](698.划分为k个相等的子集.py)
+https://labuladong.github.io/algo/4/30/105/
+
+## [78.子集.py](78.子集.py)
+```
+class Solution:
+    def dfs(self, nums, start, curr):
+        self.ans.append(curr[:])
+        for i in range(start, len(nums)):
+            self.dfs(nums, i + 1, curr + [nums[i]])
+
+    def subsets(self, nums):
+        self.ans = []
+        self.dfs(nums, 0, [])
+        return self.ans
+```
+
+## [77.组合.py](77.组合.py)
+```
+class Solution:
+    def dfs(self, n, k, curr, start):
+        if len(curr) == k:
+            self.ans.append(curr[:])
+        for i in range(start, n):
+            self.dfs(n, k, curr + [i+1], i+1)
+    
+    def combine(self, n, k):
+        self.ans = []
+        self.dfs(n, k, [], 0)
+        return self.ans
+```
+
+## [40.组合总和-ii.py](40.组合总和-ii.py)
+套用框架即可。注意有重复元素，故先将数组排序，然后再使用剪枝逻辑
+```
+if i > start and nums[i] == nums[i - 1]:
+    continue
+```
+注意组合的剪枝逻辑和全排列的剪枝逻辑的对比
+
+## [39.组合总和.py](39.组合总和.py)
+一个元素可用多次，那么只需将数组排序，在回溯下一层时传入start而不是start+1即可
+
 <br><br>
 
 # 数据结构设计
@@ -457,3 +551,6 @@ https://labuladong.github.io/algo/2/18/30/
 - [98.验证二叉搜索树.py](98.验证二叉搜索树.py)
 - [72.编辑距离.py](72.编辑距离.py)
 - [1312.让字符串成为回文串的最少插入次数.py](1312.让字符串成为回文串的最少插入次数.py)
+- [47.全排列-ii.py](47.全排列-ii.py)
+- [51.n-皇后.py](51.n-皇后.py)
+- [698.划分为k个相等的子集.py](698.划分为k个相等的子集.py)
