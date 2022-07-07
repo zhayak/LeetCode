@@ -436,6 +436,22 @@ else:
 dp[i][j]表示使用前i个数使其和为j<br>
 注意这里的base case为dp[0][0] = 1。dp[i][0]不一定为1，比如nums = [0, 0, 0]时，dp[1][0] = 2, dp[2][0] = 4
 
+## [174.地下城游戏.py](174.地下城游戏.py)
+反向dp，从右下角向左上角填充。dp[i][j]表示从(i,j)出发走到右下角所需的最小血量。base case为 dp[m-1][n-1] = 1 if dungeon[i][j] > 0 else -dungeon[i][j] + 1
+```
+dp[i][j] = max(min(dp[i][j + 1], dp[i + 1][j]) - dungeon[i][j], 1)
+```
+
+## [514.自由之路.py](514.自由之路.py)
+注意如何使用备忘录记录中间结果，否则会超时
+
+## [787.k-站中转内最便宜的航班.py](787.k-站中转内最便宜的航班.py)
+与514有些类似，也需要使用备忘录
+
+## [10.正则表达式匹配.py](10.正则表达式匹配.py)
+注意状态转移方程的定义，主要是*要特殊处理
+https://leetcode.cn/problems/regular-expression-matching/solution/zheng-ze-biao-da-shi-pi-pei-by-leetcode-solution/
+
 <br><br>
 
 # 回溯算法
@@ -561,3 +577,4 @@ https://labuladong.github.io/algo/2/18/30/
 - [51.n-皇后.py](51.n-皇后.py)
 - [698.划分为k个相等的子集.py](698.划分为k个相等的子集.py)
 - [494.目标和.py](494.目标和.py)
+- [787.k-站中转内最便宜的航班.py](787.k-站中转内最便宜的航班.py)
