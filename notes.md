@@ -624,6 +624,51 @@ if i > start and nums[i] == nums[i - 1]:
 
 <br><br>
 
+# 前缀树 Trie
+## [208.实现-trie-前缀树.py](208.实现-trie-前缀树.py)
+```
+class Trie:
+
+    def __init__(self):
+        self.children = {}
+        self.isEnd = False
+
+    def insert(self, word: str) -> None:
+        node = self
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = Trie()
+            node = node.children[ch]
+        node.isEnd = True
+
+    def search(self, word: str) -> bool:
+        node = self
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return node.isEnd
+
+    def startsWith(self, prefix: str) -> bool:
+        node = self
+        for ch in prefix:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return True
+```
+
+## [648.单词替换.py](648.单词替换.py)
+前缀树的基本应用
+
+## [211.添加与搜索单词-数据结构设计.py](211.添加与搜索单词-数据结构设计.py)
+使用前缀树的数据结构即可。注意这里有对通配符的搜索操作
+
+## [677.键值映射.py](677.键值映射.py)
+使用前缀树记录前缀的和即可，该前缀树需要一个self.value变量，无需self.isEnd。同时维护一个mapping，记录key值对应的value，方便当key已经存在时更新value
+
+<br><br>
+
 # 数据结构设计
 ## [380.o-1-时间插入、删除和获取随机元素.py](380.o-1-时间插入、删除和获取随机元素.py)
 使用一个 `val_to_index` 的dictionary加上数组来记录数据。删除时，将想要删除的元素与数组末尾的元素进行交换，然后再删除末尾的元素。
